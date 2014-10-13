@@ -499,6 +499,8 @@ Jira List
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/STRATOS-785'>STRATOS-785</a>] -         Autoscaling Containers in Stratos
 </li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-890'>STRATOS-890</a>] -         Users should be able to provide a Git repo url when subscribing
+</li>
 </ul>
                                 
 **Task**
