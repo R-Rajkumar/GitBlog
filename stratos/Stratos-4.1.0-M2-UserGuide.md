@@ -31,7 +31,7 @@ Pre-requisite
     * Run ``` up.sh ``` script file - ``` {SETUP_HOME}$ ./up.sh ``` (You might have to use ```sudo``` in some cases.)
     * Above command will start-up 4 VMs, namely discovery, master, minion-1 and minion-2.
     * SSH to master node ; ``` {SETUP_HOME}$ vagrant ssh master ```
-    * Pull Stratos PHP Docker Image from DockerHub into master node or into the local machine.
+    * Pull Stratos PHP Docker Image from [DockerHub](https://registry.hub.docker.com/u/apachestratos/php/tags/manage/) into master node or into the local machine.
     ``` sh 
     docker pull apachestratos/php:4.1.0-m2 
     ```
