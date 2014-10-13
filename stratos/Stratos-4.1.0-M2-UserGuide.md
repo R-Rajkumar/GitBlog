@@ -349,19 +349,7 @@ subscribe-cartridge --autoscaling-policy economy -p php-subscription.json
 
 ```
 
-##5. Unsubscribe from a Cartridge
-
-#### Curl Command
-```sh
-curl -X POST -H "Content-Type: application/json" -d 'myphp' -k -v -u admin:admin "https://localhost:9443/stratos/admin/cartridge/unsubscribe"
-```
-
-#### CLI Command
-```bash
-unsubscribe-cartridge -f myphp
-```
-
-##6. Accessing PHP service
+##5. Accessing PHP service
 
 Currently accessing via Load Balancer is not supported. You could access the service via **http://{MemberPrivateIp}:{ALLOCATED_SERVICE_HOST_PORT}**.
 
@@ -400,7 +388,7 @@ Or else you can simply try one of the following URLs:
 - http://172.17.8.102:{ALLOCATED_SERVICE_HOST_PORT}
 
 
-##7. Testing Autoscaling
+##6. Testing Autoscaling
 
 Currently autoscaling works based on CPU and Memory usage. You can stress docker containers using stress tool. The given docker image alredy have this tool.
 
@@ -445,7 +433,7 @@ List of LB members for the [cluster]: myphp
 ==================================================
 ```
 
-##8. Testing Manual Scaling
+##7. Testing Manual Scaling
 
 Currently, manual scaling allows you to change the minimum container count dynamically for an existing subscription.
 
@@ -484,6 +472,19 @@ list-members --alias myphp --cartridge-type php
 ```
 
 Similarly, you could downgrade the minimum container count as well, using the same command.
+
+
+##8. Unsubscribe from a Cartridge
+
+#### Curl Command
+```sh
+curl -X POST -H "Content-Type: application/json" -d 'myphp' -k -v -u admin:admin "https://localhost:9443/stratos/admin/cartridge/unsubscribe"
+```
+
+#### CLI Command
+```bash
+unsubscribe-cartridge -f myphp
+```
 
 Jira List
 ----------
