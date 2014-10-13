@@ -363,11 +363,36 @@ unsubscribe-cartridge myphp
 
 ##6. Accessing PHP service
 
-Currently accessing via Load Balancer is not supported. You could access the service via **http://{HOST_IP}:{SERVICE_PORT}**.
+Currently accessing via Load Balancer is not supported. You could access the service via **http://{MemberPrivateIp}:{ALLOCATED_SERVICE_HOST_PORT}**.
 
-In order to find the **SERVICE_PORT** issue following command in the Kubernetes Master Node.
-```sh
-kubecfg list services
+In order to find the **MemberPrivateIp** and **ALLOCATED_SERVICE_HOST_PORT** issue following CLI command.
+#### CLI Command
+```bash
+list-members --alias myphp --cartridge-type php
+```
+#### Response
+```bash
+
+List of members in the [cluster]: myphp
+
+	ServiceName : php
+	ClusterId : myphp.php.domain
+	Status : Created
+	**MemberPrivateIp : 172.17.8.100**
+	MemberFloatingIp : 172.17.8.100
+	**Member Properties : [Property [name=ALLOCATED_SERVICE_HOST_PORT, value=4506]]**
+	-----------------------
+
+	ServiceName : php
+	ClusterId : myphp.php.domain
+	Status : Created
+	MemberPrivateIp : 172.17.8.100
+	MemberFloatingIp : 172.17.8.100
+	Member Properties : [Property [name=ALLOCATED_SERVICE_HOST_PORT, value=4506]]
+	-----------------------
+==================================================
+List of LB members for the [cluster]: myphp
+==================================================
 ```
 
 Then access from one of the following URLs:
