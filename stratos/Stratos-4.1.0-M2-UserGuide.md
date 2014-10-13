@@ -378,27 +378,26 @@ List of members in the [cluster]: myphp
 	ServiceName : php
 	ClusterId : myphp.php.domain
 	Status : Created
-	**MemberPrivateIp : 172.17.8.100**
+	MemberPrivateIp : 172.17.8.100
 	MemberFloatingIp : 172.17.8.100
-	**Member Properties : [Property [name=ALLOCATED_SERVICE_HOST_PORT, value=4506]]**
+	Member Properties : [Property [name=ALLOCATED_SERVICE_HOST_PORT, value=4506]]
 	-----------------------
 
 	ServiceName : php
 	ClusterId : myphp.php.domain
 	Status : Created
-	MemberPrivateIp : 172.17.8.100
-	MemberFloatingIp : 172.17.8.100
+	MemberPrivateIp : 172.17.8.101
+	MemberFloatingIp : 172.17.8.101
 	Member Properties : [Property [name=ALLOCATED_SERVICE_HOST_PORT, value=4506]]
 	-----------------------
 ==================================================
 List of LB members for the [cluster]: myphp
 ==================================================
 ```
-
-Then access from one of the following URLs:
-- http://172.17.8.100:{SERVICE_PORT}
-- http://172.17.8.101:{SERVICE_PORT}
-- http://172.17.8.102:{SERVICE_PORT}
+Or else you can simply try one of the following URLs:
+- http://172.17.8.100:{ALLOCATED_SERVICE_HOST_PORT}
+- http://172.17.8.101:{ALLOCATED_SERVICE_HOST_PORT}
+- http://172.17.8.102:{ALLOCATED_SERVICE_HOST_PORT}
 
 
 ##7. Testing Autoscaling
@@ -437,8 +436,8 @@ List of members in the [cluster]: myphp
 	ServiceName : php
 	ClusterId : myphp.php.domain
 	Status : Created
-	MemberPrivateIp : 172.17.8.100
-	MemberFloatingIp : 172.17.8.100
+	MemberPrivateIp : 172.17.8.101
+	MemberFloatingIp : 172.17.8.101
 	Member Properties : [Property [name=ALLOCATED_SERVICE_HOST_PORT, value=4506]]
 	-----------------------
 ==================================================
