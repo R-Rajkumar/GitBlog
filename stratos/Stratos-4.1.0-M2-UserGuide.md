@@ -89,7 +89,7 @@ deploy-kubernetes-group -p kub-register.json
 - Please refer support using [Apache Stratos CLI Tool](https://cwiki.apache.org/confluence/display/STRATOS/4.1.0+Configuring+CLI+Tool) to configure CLI tool
 
 #### kub-register.json
-```javascript
+```json
 {
       "groupId": "KubGrp1",
       "description": "Kubernetes CoreOS cluster on EC2 ",
@@ -168,7 +168,7 @@ deploy-kubernetes-group -p kub-register.json
 ```
 
 #### Response:
-```javascript
+```json
 {"kubernetesGroup":{"description":"Kubernetes CoreOS cluster on EC2 ","groupId":"KubGrp1","kubernetesHosts":[{"hostId":"KubHostSlave1","hostIpAddress":"172.17.8.101","hostname":"slave1.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]},{"hostId":"KubHostSlave2","hostIpAddress":"172.17.8.102","hostname":"slave2.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]}],"kubernetesMaster":{"hostId":"KubHostMaster1","hostIpAddress":"172.17.8.100","hostname":"master.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]},"portRange":{"lower":4500,"upper":5000},"property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]}}
 ```
 
@@ -217,7 +217,7 @@ deploy-cartridge -p php-docker-cartridge.json
 ```
 
 ### php-docker-cartridge.json
-```javascript
+```json
 {
       "type": "php",
       "provider": "apache",
@@ -261,7 +261,7 @@ deploy-autoscaling-policy -p autoscale-policy.json
 ```
 
 ### autoscale-policy.json
-```javascript
+```json
 {
     "id": "economy",
     "loadThresholds": {
@@ -298,7 +298,7 @@ subscribe-cartridge --autoscaling-policy economy -p php-subscription.json
 
 - Replace **payload_parameter.MB_IP** and **payload_parameter.CEP_IP** by your local machine IP in the following json. Add any additional payload parameters that are needed to get PHP cartridge running, such as the repository information etc.
 
-```javascript
+```json
 {
     "cartridgeType": "php",
     "alias": "myphp",
