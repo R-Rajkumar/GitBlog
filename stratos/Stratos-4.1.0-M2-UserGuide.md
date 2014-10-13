@@ -51,8 +51,8 @@ Pre-requisite
     * Verify that the image is properly loaded by issuing ```docker images``` in each node;
     ```sh
     core@master ~ $ docker images
-    REPOSITORY                   TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-    apachestratos/php:4.1.0-m2   latest              0fff8e5ac572        3 hours ago         452.1 MB
+    REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+    apachestratos/php   4.1.0-m2            434d3f9da2eb        13 hours ago        705.4 MB
     ```
 
 - Download and extract [Apache ActiveMQ 5.10.0 or later](http://activemq.apache.org/) and start ActiveMQ - ``` {ACTIVEMQ_HOME}$ ./bin/activemq start ```
