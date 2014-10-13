@@ -86,6 +86,8 @@ curl -X POST -H "Content-Type: application/json" -d @"kub-register.json" -k  -u 
 deploy-kubernetes-group -p kubernetes-group.json
 ```
 
+- Please refer support using [Apache Stratos CLI Tool](https://cwiki.apache.org/confluence/display/STRATOS/4.1.0+CLI+Tool) to configure CLI tool
+
 ###kub-register.json
 ```javascript
 {
@@ -376,14 +378,10 @@ Then access from one of the following URLs:
 
 ##7. Testing Autoscaling
 
-Currently autoscaling works based on CPU and Memory usage. You can stress docker containers using stress tool.
+Currently autoscaling works based on CPU and Memory usage. You can stress docker containers using stress tool. The given docker image alredy have this tool.
 
 - ssh to the coreos node which is having containers (see trouble shoot guide at the end)
 
-- Install stress tool
-```sh
-apt-get install stress
-```
 - stress the container
 ```sh
 stress -c 4
