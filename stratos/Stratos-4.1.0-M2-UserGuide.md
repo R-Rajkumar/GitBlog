@@ -396,21 +396,91 @@ kubecfg list /pods
 Jira List
 ----------
 
+    
+**Sub-task**
+
+<ul>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-734'>STRATOS-734</a>] -         General Improvements to Stratos in docker image
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-764'>STRATOS-764</a>] -         use a maven docker plugin to build stratos docker images
+</li>
+</ul>
+            
 **Bug**
-- [STRATOS-668](https://issues.apache.org/jira/browse/STRATOS-668) - Java.naming.provider.url is incorrect in HAProxy Extension jndi.properties file
-- [STRATOS-677](https://issues.apache.org/jira/browse/STRATOS-677) - Instances are getting spawn when unsubscribing
-- [STRATOS-706](https://issues.apache.org/jira/browse/STRATOS-706) - member terminate event should log reason
-- [STRATOS-862](https://issues.apache.org/jira/browse/STRATOS-862) - Kubernetes scheduler needs to be restarted every 15 min or so
-- [STRATOS-776](https://issues.apache.org/jira/browse/STRATOS-776) - Stratos in docker image not starting
 
-**Improvements**
+<ul>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-377'>STRATOS-377</a>] -         Getting &quot;Tenant not found&quot; warning when subscribing cartridges as super tenant   
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-589'>STRATOS-589</a>] -         [vCloud] Getting error when unsubscribing, but instance terminated successfully
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-590'>STRATOS-590</a>] -         DHCP based IP assignment not working on vCloud environment
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-641'>STRATOS-641</a>] -         LoadBalancer doesn&#39;t keep super-tenant subscriptions for a multi-tenant service
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-705'>STRATOS-705</a>] -         create docker files for stratos products and activemq/mysql
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-723'>STRATOS-723</a>] -         Stratos stopped working with java.net.SocketException
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-771'>STRATOS-771</a>] -         [Wiki] Auto commit option in UI not documented
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-775'>STRATOS-775</a>] -         Error when trying to login as a tenant from Carbon UI
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-802'>STRATOS-802</a>] -         Partition deployment fails in EC2
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-814'>STRATOS-814</a>] -         Tenant admin permissions are persisted in UM_PERMISSION incorrectly.
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-818'>STRATOS-818</a>] -         Error log getting printed during the server start-up
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-882'>STRATOS-882</a>] -         [CLI] Invalid Error Handling at Login
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-883'>STRATOS-883</a>] -         CLI does not show error messages when unknown server errors occur
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-886'>STRATOS-886</a>] -         List Kubernetets Hosts method does to work in REST API
+</li>
+</ul>
+                
+**Improvement**
 
-- [STRATOS-791](https://issues.apache.org/jira/browse/STRATOS-791) - MQTT protocol support for the messaging module
-- [STRATOS-813](https://issues.apache.org/jira/browse/STRATOS-813) - Fix critical issues reported by Sonar
+<ul>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-603'>STRATOS-603</a>] -         Validate Git URL
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-695'>STRATOS-695</a>] -         [Wiki] - Improve Cartridge Documentation
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-813'>STRATOS-813</a>] -         Fix critical issues reported by Sonar
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-857'>STRATOS-857</a>] -         Clean/Refactor Stratos REST API to have Restful Operations 
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-873'>STRATOS-873</a>] -         [Sonar Findings] [Critical] Array is Stored Directly 
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-875'>STRATOS-875</a>] -         Abstracting out the Application and Group in the Topology
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-884'>STRATOS-884</a>] -         CLI has duplicated command implementations in RestCommandLineService class
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-885'>STRATOS-885</a>] -         CLI command classes are not using a proper naming convention
+</li>
+</ul>
+    
+**New Feature**
 
-**New Features**
-- [STRATOS-785](https://issues.apache.org/jira/browse/STRATOS-785) - Autoscaling Containers in Stratos
+<ul>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-761'>STRATOS-761</a>] -         Tenant isolation for policies and definitions - in Autoscalar
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-785'>STRATOS-785</a>] -         Autoscaling Containers in Stratos
+</li>
+</ul>
+                                
+**Task**
 
+<ul>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-856'>STRATOS-856</a>] -         Need a wiki page for Performance Tuning
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-867'>STRATOS-867</a>] -         Tenant isolation for Kubernetes definitions - in Autoscalar
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-868'>STRATOS-868</a>] -         Add mock REST endpoint methods for Kubernetes 
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-869'>STRATOS-869</a>] -         Add exposed Kubernetes related methods in CLI
+</li>
+</ul>
 
 
 
