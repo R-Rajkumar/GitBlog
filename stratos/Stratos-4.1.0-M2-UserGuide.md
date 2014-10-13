@@ -451,9 +451,14 @@ Currently, manual scaling allows you to change the minimum container count dynam
 
 For an example, say you have subscribed to a **php** cartridge using **myphp** as alias and while you are subscribing, you have specified **KUBERNETES_REPLICAS_MIN** property to **3**. Now, you feel that you need to have **10** minimum docker instances for your php cluster, due to seasonal sales. With manual scaling feature, you are only one command away.
 
+#### Curl Command
+```bash
+curl -X PUT -H "Content-Type: application/json" -d @manual-scaling.json -k -v -u admin:admin https://localhost:9443/stratos/admin/subscriptions/myphp/properties
+```
+
 #### CLI Command
 ```bash
-update-subscription myphp --resource-path ~/manual-scaling.json
+update-subscription myphp -p ~/manual-scaling.json
 ```
 #### manual-scaling.json
 ```json
