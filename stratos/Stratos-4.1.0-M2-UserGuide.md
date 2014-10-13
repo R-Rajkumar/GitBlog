@@ -445,6 +445,41 @@ List of LB members for the [cluster]: myphp
 ==================================================
 ```
 
+##8. Testing Manual Scaling
+
+Currently, manual scaling allows you to change the minimum container count dynamically for an existing subscription.
+
+For an example, say you have subscribed to a **php** cartridge using **myphp** as alias and while you are subscribing, you have specified **KUBERNETES_REPLICAS_MIN** property to **3**. Now, you feel that you need to have **10** minimum docker instances for your php cluster, due to seasonal sales. With manual scaling feature, you are only one command away.
+
+#### CLI Command
+```bash
+update-subscription myphp --resource-path ~/manual-scaling.json
+```
+#### manual-scaling.json
+```json
+{
+    "property": [
+            {
+             "name": "KUBERNETES_REPLICAS_MIN",
+             "value": "10"
+            }
+          ]    
+}
+```
+#### Response
+```bash
+Successfully updated subscription alias: myphp
+```
+
+After few minutes, when you list members, you should see at least 10 members in the cluster.
+
+#### CLI Command
+```bash
+list-members --alias myphp --cartridge-type php
+```
+
+Similarly, you could downgrade the minimum container count as well, using the same command.
+
 Jira List
 ----------
 
@@ -464,6 +499,8 @@ Jira List
 <li>[<a href='https://issues.apache.org/jira/browse/STRATOS-641'>STRATOS-641</a>] -         LoadBalancer doesn&#39;t keep super-tenant subscriptions for a multi-tenant service
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/STRATOS-775'>STRATOS-775</a>] -         Error when trying to login as a tenant from Carbon UI
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-890'>STRATOS-890</a>] -         Users should be able to provide a Git repo url when subscribing
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/STRATOS-802'>STRATOS-802</a>] -         Partition deployment fails in EC2
 </li>
@@ -498,8 +535,6 @@ Jira List
 <li>[<a href='https://issues.apache.org/jira/browse/STRATOS-761'>STRATOS-761</a>] -         Tenant isolation for policies and definitions - in Autoscalar
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/STRATOS-785'>STRATOS-785</a>] -         Autoscaling Containers in Stratos
-</li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-890'>STRATOS-890</a>] -         Users should be able to provide a Git repo url when subscribing
 </li>
 </ul>
                                 
