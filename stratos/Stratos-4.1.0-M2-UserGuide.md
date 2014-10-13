@@ -83,7 +83,7 @@ curl -X POST -H "Content-Type: application/json" -d @"kub-register.json" -k  -u 
 
 ### CLI Command
 ```bash
-deploy-kubernetes-group -p kubernetes-group.json
+deploy-kubernetes-group -p kub-register.json
 ```
 
 - Please refer support using [Apache Stratos CLI Tool](https://cwiki.apache.org/confluence/display/STRATOS/4.1.0+Configuring+CLI+Tool) to configure CLI tool
@@ -169,7 +169,7 @@ deploy-kubernetes-group -p kubernetes-group.json
 
 #### Response:
 ```javascript
-{"kubernetesGroup":{"description":"Kubernetes CoreOS cluster on EC2 ","groupId":"KubGrp1","kubernetesHosts":[{"hostId":"KubHostSlave1","hostIpAddress":"172.17.8.101","hostname":"slave1.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]},{"hostId":"KubHostSlave2","hostIpAddress":"172.17.8.102","hostname":"slave2.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]}],"kubernetesMaster":{"hostId":"KubHostMaster1","hostIpAddress":"172.17.8.100","hostname":"master.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]},"portRange":{"lower":4000,"upper":5000},"property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]}}
+{"kubernetesGroup":{"description":"Kubernetes CoreOS cluster on EC2 ","groupId":"KubGrp1","kubernetesHosts":[{"hostId":"KubHostSlave1","hostIpAddress":"172.17.8.101","hostname":"slave1.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]},{"hostId":"KubHostSlave2","hostIpAddress":"172.17.8.102","hostname":"slave2.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]}],"kubernetesMaster":{"hostId":"KubHostMaster1","hostIpAddress":"172.17.8.100","hostname":"master.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]},"portRange":{"lower":4500,"upper":5000},"property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]}}
 ```
 
 #### CLI Command
@@ -208,7 +208,7 @@ Kubernetes hosts found:
 
 #### Curl Command
 ``` sh 
-curl -X POST -H "Content-Type: application/json" -d @'php-docker-cartridge.json' -k -v -u admin:admin "https://localhost:9443/stratos/admin/cartridge/definition"
+curl -X POST -H "Content-Type: application/json" -d @'php-docker-cartridge.json' -k -u admin:admin "https://localhost:9443/stratos/admin/cartridge/definition"
 ```
 
 #### CLI Command
@@ -252,7 +252,7 @@ deploy-cartridge -p php-docker-cartridge.json
 
 #### Curl Command
 ```bash
-curl -X POST -H "Content-Type: application/json" -d @'autoscale-policy.json' -k -v -u admin:admin “https://localhost:9443/stratos/admin/policy/autoscale”
+curl -X POST -H "Content-Type: application/json" -d @'autoscale-policy.json' -k -u admin:admin “https://localhost:9443/stratos/admin/policy/autoscale”
 ```
 
 #### CLI Command
@@ -290,7 +290,7 @@ curl -X POST -H "Content-Type: application/json" -d @php-subscription.json -k -v
 
 #### CLI Command
 ```bash
-subscribe-cartridge --autoscaling-policy economy -p php-cartridge-subscription.json
+subscribe-cartridge --autoscaling-policy economy -p php-subscription.json
 ```
 
 
@@ -358,7 +358,7 @@ curl -X POST -H "Content-Type: application/json" -d 'myphp' -k -v -u admin:admin
 
 #### CLI Command
 ```bash
-unsubscribe-cartridge myphp
+unsubscribe-cartridge -f myphp
 ```
 
 ##6. Accessing PHP service
