@@ -382,15 +382,19 @@ Currently autoscaling works based on CPU and Memory usage. You can stress docker
 
 - ssh to the coreos node which is having containers (see trouble shoot guide at the end)
 
+- ssh to one of the Docker containers (please refer to questions 9 and 10 of troubleshooting guide)
+
 - stress the container
 ```sh
 stress -c 4
 ```
-- observe the stratos log, you will get drools logs regarding scaling
+- observe the stratos log, you will get drools logs with respect to scaling.
 
-- check the number of pods in master node
-```sh
-kubecfg list /pods
+- check the growing member list.
+
+### CLI Command
+```bash
+list-members --alias myphp --cartridge-type php
 ```
 
 
