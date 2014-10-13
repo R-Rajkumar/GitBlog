@@ -15,8 +15,11 @@ Main Features
 -------------
 
 - [Docker](https://www.docker.com/) support using [Google Kubernetes](https://github.com/GoogleCloudPlatform/kubernetes) and [CoreOS](https://coreos.com/)
+- Auto scaling Docker Containers
+- Manual scaling Docker Containers
+- CLI support for Docker deployments
 - [MQTT](http://mqtt.org/) support (removal of JNDI)
-- Python Cartridge Agent 
+
 
 Pre-requisite
 -------------
