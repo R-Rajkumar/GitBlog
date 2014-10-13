@@ -88,7 +88,7 @@ deploy-kubernetes-group -p kubernetes-group.json
 
 - Please refer support using [Apache Stratos CLI Tool](https://cwiki.apache.org/confluence/display/STRATOS/4.1.0+CLI+Tool) to configure CLI tool
 
-###kub-register.json
+#### kub-register.json
 ```javascript
 {
       "groupId": "KubGrp1",
@@ -162,17 +162,17 @@ deploy-kubernetes-group -p kubernetes-group.json
 
 ### Verify Kubernetes-CoreOS Host Cluster Registration
 
-###Curl Command
+#### Curl Command
 ```sh
  curl  -k  -u admin:admin "https://localhost:9443/stratos/admin/kubernetes/group/KubGrp1"
 ```
 
-####Response:
+#### Response:
 ```javascript
 {"kubernetesGroup":{"description":"Kubernetes CoreOS cluster on EC2 ","groupId":"KubGrp1","kubernetesHosts":[{"hostId":"KubHostSlave1","hostIpAddress":"172.17.8.101","hostname":"slave1.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]},{"hostId":"KubHostSlave2","hostIpAddress":"172.17.8.102","hostname":"slave2.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]}],"kubernetesMaster":{"hostId":"KubHostMaster1","hostIpAddress":"172.17.8.100","hostname":"master.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]},"portRange":{"lower":4000,"upper":5000},"property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]}}
 ```
 
-### CLI Command
+#### CLI Command
 ```bash
 list-kubernetes-groups
 ```
@@ -187,7 +187,7 @@ Kubernetes groups found:
 +----------+-----------------------------------+
 ```
 
-### CLI Command
+#### CLI Command
 ```bash
 list-kubernetes-hosts KubGrp1
 ```
@@ -206,17 +206,17 @@ Kubernetes hosts found:
 
 ##2. Deploy a Docker Cartridge
 
-###Curl Command
+#### Curl Command
 ``` sh 
 curl -X POST -H "Content-Type: application/json" -d @'php-docker-cartridge.json' -k -v -u admin:admin "https://localhost:9443/stratos/admin/cartridge/definition"
 ```
 
-### CLI Command
+#### CLI Command
 ```bash
 deploy-cartridge -p php-docker-cartridge.json
 ```
 
-###php-docker-cartridge.json
+### php-docker-cartridge.json
 ```javascript
 {
       "type": "php",
@@ -250,17 +250,17 @@ deploy-cartridge -p php-docker-cartridge.json
 
 ##3. Deploy the autoscale policy
 
-###Curl Command
+#### Curl Command
 ```bash
 curl -X POST -H "Content-Type: application/json" -d @'autoscale-policy.json' -k -v -u admin:admin “https://localhost:9443/stratos/admin/policy/autoscale”
 ```
 
-### CLI Command
+#### CLI Command
 ```bash
 deploy-autoscaling-policy -p autoscale-policy.json
 ```
 
-###autoscale-policy.json
+### autoscale-policy.json
 ```javascript
 {
     "id": "economy",
@@ -283,18 +283,18 @@ deploy-autoscaling-policy -p autoscale-policy.json
 
 ##4. Subscribe to a Docker Cartridge
 
-### Curl Command
+#### Curl Command
 ``` sh 
 curl -X POST -H "Content-Type: application/json" -d @php-subscription.json -k -v -u admin:admin "https://localhost:9443/stratos/admin/cartridge/subscribe"
 ```
 
-### CLI Command
+#### CLI Command
 ```bash
 subscribe-cartridge --autoscaling-policy economy -p php-cartridge-subscription.json
 ```
 
 
-###php-subscription.json
+### php-subscription.json
 
 - Replace **payload_parameter.MB_IP** and **payload_parameter.CEP_IP** by your local machine IP in the following json. Add any additional payload parameters that are needed to get PHP cartridge running, such as the repository information etc.
 
@@ -351,12 +351,12 @@ subscribe-cartridge --autoscaling-policy economy -p php-cartridge-subscription.j
 
 ##5. Unsubscribe from a Cartridge
 
-###Curl Command
+#### Curl Command
 ```sh
 curl -X POST -H "Content-Type: application/json" -d 'myphp' -k -v -u admin:admin "https://localhost:9443/stratos/admin/cartridge/unsubscribe"
 ```
 
-### CLI Command
+#### CLI Command
 ```bash
 unsubscribe-cartridge myphp
 ```
@@ -392,11 +392,34 @@ stress -c 4
 
 - check the growing member list.
 
-### CLI Command
+#### CLI Command
 ```bash
 list-members --alias myphp --cartridge-type php
 ```
+#### Response
+```bash
 
+List of members in the [cluster]: myphp
+
+	ServiceName : php
+	ClusterId : myphp.php.domain
+	Status : Created
+	MemberPrivateIp : 172.17.8.100
+	MemberFloatingIp : 172.17.8.100
+	Member Properties : [Property [name=ALLOCATED_SERVICE_HOST_PORT, value=4506]]
+	-----------------------
+
+	ServiceName : php
+	ClusterId : myphp.php.domain
+	Status : Created
+	MemberPrivateIp : 172.17.8.100
+	MemberFloatingIp : 172.17.8.100
+	Member Properties : [Property [name=ALLOCATED_SERVICE_HOST_PORT, value=4506]]
+	-----------------------
+==================================================
+List of LB members for the [cluster]: myphp
+==================================================
+```
 
 Jira List
 ----------
