@@ -305,8 +305,6 @@ subscribe-cartridge --autoscaling-policy economy -p php-subscription.json
     "commitsEnabled": "false",
     "autoscalePolicy": "economy",
     "repoURL": "https://github.com/sajhak/myphprepo",
-    "repoUsername": "sajhak@gmail.com",
-    "repoPassword": "sasa200",
     "property": [
             {
              "name": "KUBERNETES_CLUSTER_ID",
@@ -336,10 +334,6 @@ subscribe-cartridge --autoscaling-policy economy -p php-subscription.json
              "name": "payload_parameter.CEP_PORT",
              "value": "7611"
             },       
-            {
-             "name": "payload_parameter.LOG_LEVEL",
-             "value": "DEBUG"
-            },
             {
              "name": "payload_parameter.APP_PATH",
              "value": "/var/www"
