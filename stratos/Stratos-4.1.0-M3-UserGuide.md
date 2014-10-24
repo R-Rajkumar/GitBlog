@@ -6,7 +6,7 @@ Table of Content
 
 - [Main Features](#main-features)
 - [Pre-requisite](#pre-requisite)
-- [Testing M1](#testing-m1)
+- [Testing M3](#testing-m3)
 - [Jira List](#jira-list)
 - [Troubleshooting Guide](#troubleshooting-guide)
 
@@ -15,8 +15,13 @@ Main Features
 -------------
 
 - [Docker](https://www.docker.com/) support using [Google Kubernetes](https://github.com/GoogleCloudPlatform/kubernetes) and [CoreOS](https://coreos.com/)
+- VM LB support for dockers
+- Private docker registry
+- Auto scaling Docker Containers
+- Manual scaling Docker Containers
+- CLI support for Docker deployments
 - [MQTT](http://mqtt.org/) support (removal of JNDI)
-- Python Cartridge Agent 
+
 
 Pre-requisite
 -------------
@@ -28,13 +33,13 @@ Pre-requisite
     * Run ``` up.sh ``` script file - ``` {SETUP_HOME}$ ./up.sh ``` (You might have to use ```sudo``` in some cases.)
     * Above command will start-up 4 VMs, namely discovery, master, minion-1 and minion-2.
     * SSH to master node ; ``` {SETUP_HOME}$ vagrant ssh master ```
-    * Pull Stratos PHP Docker Image from DockerHub into master node or into the local machine.
+    * Pull Stratos PHP Docker Image from [DockerHub](https://registry.hub.docker.com/u/apachestratos/php/tags/manage/) into master node or into the local machine.
     ``` sh 
-    docker pull apachestratos/php:4.1.0-m2
+    docker pull apachestratos/php:4.1.0-m2 
     ```
     * Import downloaded Stratos PHP Docker image as a tarball.
     ```sh
-    docker save -o stratos-php-latest.tar  apachestratos/php:4.1.0-m2
+    docker save -o stratos-php-latest.tar  apachestratos/php:4.1.0-m2 
     ```     
     * SCP the Stratos PHP Docker Image tarball to minion-1 and minion-2. You can find the private key file which you can use to SCP, in the **{SETUP_HOME}/ssh.config** file, against **IdentityFile** attribute. 
     ``` sh
@@ -48,8 +53,8 @@ Pre-requisite
     * Verify that the image is properly loaded by issuing ```docker images``` in each node;
     ```sh
     core@master ~ $ docker images
-    REPOSITORY                   TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-    apachestratos/php:4.1.0-m2   latest              0fff8e5ac572        3 hours ago         452.1 MB
+    REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+    apachestratos/php   4.1.0-m2            434d3f9da2eb        13 hours ago        705.4 MB
     ```
 
 - Download and extract [Apache ActiveMQ 5.10.0 or later](http://activemq.apache.org/) and start ActiveMQ - ``` {ACTIVEMQ_HOME}$ ./bin/activemq start ```
@@ -63,11 +68,12 @@ Pre-requisite
 
 - Change the property named **"java.naming.provider.url"** value to **tcp://{MB_IP}:61616** in **{STRATOS_HOME}/repository/deployment/server/outputeventadaptors/JMSOutputAdaptor.xml** file.
 
+- Change the **expiryTimeout** element's value in **{STRATOS_HOME}/repository/conf/autoscaler.xml** to **30000** (it is the maximum time a member can be in the pending state)
 
 - Start Stratos using ``` {STRATOS_HOME}$ ./bin/stratos.sh start ``` command.
 
 
-Testing M2
+Testing M3
 ----------
 
 ##1. Register Kubernetes-CoreOS Host Cluster in Stratos
@@ -77,8 +83,15 @@ Testing M2
 curl -X POST -H "Content-Type: application/json" -d @"kub-register.json" -k  -u admin:admin "https://localhost:9443/stratos/admin/kubernetes/deploy/group"
 ```
 
-###kub-register.json
-```javascript
+### CLI Command
+```bash
+deploy-kubernetes-group -p kub-register.json
+```
+
+- Please refer support using [Apache Stratos CLI Tool](https://cwiki.apache.org/confluence/display/STRATOS/4.1.0+Configuring+CLI+Tool) to configure CLI tool
+
+#### kub-register.json
+```json
 {
       "groupId": "KubGrp1",
       "description": "Kubernetes CoreOS cluster on EC2 ",
@@ -151,25 +164,62 @@ curl -X POST -H "Content-Type: application/json" -d @"kub-register.json" -k  -u 
 
 ### Verify Kubernetes-CoreOS Host Cluster Registration
 
-###Curl Command
+#### Curl Command
 ```sh
  curl  -k  -u admin:admin "https://localhost:9443/stratos/admin/kubernetes/group/KubGrp1"
 ```
 
-####Response:
-```javascript
-{"kubernetesGroup":{"description":"Kubernetes CoreOS cluster on EC2 ","groupId":"KubGrp1","kubernetesHosts":[{"hostId":"KubHostSlave1","hostIpAddress":"172.17.8.101","hostname":"slave1.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]},{"hostId":"KubHostSlave2","hostIpAddress":"172.17.8.102","hostname":"slave2.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]}],"kubernetesMaster":{"hostId":"KubHostMaster1","hostIpAddress":"172.17.8.100","hostname":"master.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]},"portRange":{"lower":4000,"upper":5000},"property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]}}
+#### Response:
+```json
+{"kubernetesGroup":{"description":"Kubernetes CoreOS cluster on EC2 ","groupId":"KubGrp1","kubernetesHosts":[{"hostId":"KubHostSlave1","hostIpAddress":"172.17.8.101","hostname":"slave1.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]},{"hostId":"KubHostSlave2","hostIpAddress":"172.17.8.102","hostname":"slave2.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]}],"kubernetesMaster":{"hostId":"KubHostMaster1","hostIpAddress":"172.17.8.100","hostname":"master.dev.kubernetes.example.org","property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]},"portRange":{"lower":4500,"upper":5000},"property":[{"name":"prop1","value":"val1"},{"name":"prop2","value":"val2"}]}}
+```
+
+#### CLI Command
+```bash
+list-kubernetes-groups
+```
+
+#### Response
+```
+Kubernetes groups found:
++----------+-----------------------------------+
+| Group ID | Description                       |
++----------+-----------------------------------+
+| KubGrp1  | Kubernetes CoreOS cluster on EC2  |
++----------+-----------------------------------+
+```
+
+#### CLI Command
+```bash
+list-kubernetes-hosts KubGrp1
+```
+
+#### Response
+``` 
+Kubernetes hosts found:
++---------------+-----------------------------------+--------------+
+| Host ID       | Hostname                          | IP Address   |
++---------------+-----------------------------------+--------------+
+| KubHostSlave1 | slave1.dev.kubernetes.example.org | 172.17.8.101 |
++---------------+-----------------------------------+--------------+
+| KubHostSlave2 | slave2.dev.kubernetes.example.org | 172.17.8.102 |
++---------------+-----------------------------------+--------------+
 ```
 
 ##2. Deploy a Docker Cartridge
 
-###Curl Command
+#### Curl Command
 ``` sh 
-curl -X POST -H "Content-Type: application/json" -d @'php-docker-cartridge.json' -k -v -u admin:admin "https://localhost:9443/stratos/admin/cartridge/definition"
+curl -X POST -H "Content-Type: application/json" -d @'php-docker-cartridge.json' -k -u admin:admin "https://localhost:9443/stratos/admin/cartridge/definition"
 ```
 
-###php-docker-cartridge.json
-```javascript
+#### CLI Command
+```bash
+deploy-cartridge -p php-docker-cartridge.json
+```
+
+### php-docker-cartridge.json
+```json
 {
       "type": "php",
       "provider": "apache",
@@ -202,11 +252,18 @@ curl -X POST -H "Content-Type: application/json" -d @'php-docker-cartridge.json'
 
 ##3. Deploy the autoscale policy
 
-###Curl Command
-curl -X POST -H "Content-Type: application/json" -d @'autoscale-policy.json' -k -v -u admin:admin “https://localhost:9443/stratos/admin/policy/autoscale”
+#### Curl Command
+```bash
+curl -X POST -H "Content-Type: application/json" -d @'autoscale-policy.json' -k -u admin:admin “https://localhost:9443/stratos/admin/policy/autoscale”
+```
 
-###autoscale-policy.json
-```javascript
+#### CLI Command
+```bash
+deploy-autoscaling-policy -p autoscale-policy.json
+```
+
+### autoscale-policy.json
+```json
 {
     "id": "economy",
     "loadThresholds": {
@@ -219,7 +276,7 @@ curl -X POST -H "Content-Type: application/json" -d @'autoscale-policy.json' -k 
          "lowerLimit": 15
       },
       "loadAverage": {
-         "upperLimit": 80,
+         "upperLimit": 180,
          "lowerLimit": 20
       }
     }
@@ -228,21 +285,28 @@ curl -X POST -H "Content-Type: application/json" -d @'autoscale-policy.json' -k 
 
 ##4. Subscribe to a Docker Cartridge
 
-### Curl Command
+#### Curl Command
 ``` sh 
 curl -X POST -H "Content-Type: application/json" -d @php-subscription.json -k -v -u admin:admin "https://localhost:9443/stratos/admin/cartridge/subscribe"
 ```
 
-###php-subscription.json
+#### CLI Command
+```bash
+subscribe-cartridge --autoscaling-policy economy -p php-subscription.json
+```
+
+
+### php-subscription.json
 
 - Replace **payload_parameter.MB_IP** and **payload_parameter.CEP_IP** by your local machine IP in the following json. Add any additional payload parameters that are needed to get PHP cartridge running, such as the repository information etc.
 
-```javascript
+```json
 {
     "cartridgeType": "php",
     "alias": "myphp",
     "commitsEnabled": "false",
     "autoscalePolicy": "economy",
+    "repoURL": "https://github.com/sajhak/myphprepo",
     "property": [
             {
              "name": "KUBERNETES_CLUSTER_ID",
@@ -273,109 +337,216 @@ curl -X POST -H "Content-Type: application/json" -d @php-subscription.json -k -v
              "value": "7611"
             },       
             {
-             "name": "payload_parameter.LOG_LEVEL",
-             "value": "DEBUG"
+             "name": "payload_parameter.APP_PATH",
+             "value": "/var/www"
             }
           ]    
 }
 
 ```
 
-##5. Unsubscribe from a Cartridge
+##5. Accessing PHP service
 
-###Curl Command
+Currently accessing via Load Balancer is not supported. You could access the service via **http://{MemberPrivateIp}:{ALLOCATED_SERVICE_HOST_PORT}**.
+
+In order to find the **MemberPrivateIp** and **ALLOCATED_SERVICE_HOST_PORT** issue following CLI command.
+#### CLI Command
+```bash
+list-members --alias myphp --cartridge-type php
+```
+#### Response
+```bash
+
+List of members in the [cluster]: myphp
+
+	ServiceName : php
+	ClusterId : myphp.php.domain
+	Status : Created
+	MemberPrivateIp : 172.17.8.100
+	MemberFloatingIp : 172.17.8.100
+	Member Properties : [Property [name=ALLOCATED_SERVICE_HOST_PORT, value=4506]]
+	-----------------------
+
+	ServiceName : php
+	ClusterId : myphp.php.domain
+	Status : Created
+	MemberPrivateIp : 172.17.8.101
+	MemberFloatingIp : 172.17.8.101
+	Member Properties : [Property [name=ALLOCATED_SERVICE_HOST_PORT, value=4506]]
+	-----------------------
+==================================================
+List of LB members for the [cluster]: myphp
+==================================================
+```
+Or else you can simply try one of the following URLs:
+- http://172.17.8.100:{ALLOCATED_SERVICE_HOST_PORT}
+- http://172.17.8.101:{ALLOCATED_SERVICE_HOST_PORT}
+- http://172.17.8.102:{ALLOCATED_SERVICE_HOST_PORT}
+
+
+##6. Testing Autoscaling
+
+Currently autoscaling works based on CPU and Memory usage. You can stress docker containers using stress tool. The given docker image alredy have this tool.
+
+- ssh to the coreos node which is having containers (see trouble shoot guide at the end)
+
+- ssh to one of the Docker containers (please refer to questions 9 and 10 of troubleshooting guide)
+
+- stress the container
+```sh
+stress -c 4
+```
+- observe the stratos log, you will get drools logs with respect to scaling.
+
+- check the growing member list.
+
+#### CLI Command
+```bash
+list-members --alias myphp --cartridge-type php
+```
+#### Response
+```bash
+
+List of members in the [cluster]: myphp
+
+	ServiceName : php
+	ClusterId : myphp.php.domain
+	Status : Created
+	MemberPrivateIp : 172.17.8.100
+	MemberFloatingIp : 172.17.8.100
+	Member Properties : [Property [name=ALLOCATED_SERVICE_HOST_PORT, value=4506]]
+	-----------------------
+
+	ServiceName : php
+	ClusterId : myphp.php.domain
+	Status : Created
+	MemberPrivateIp : 172.17.8.101
+	MemberFloatingIp : 172.17.8.101
+	Member Properties : [Property [name=ALLOCATED_SERVICE_HOST_PORT, value=4506]]
+	-----------------------
+==================================================
+List of LB members for the [cluster]: myphp
+==================================================
+```
+
+##7. Testing Manual Scaling
+
+Currently, manual scaling allows you to change the minimum container count dynamically for an existing subscription.
+
+For an example, say you have subscribed to a **php** cartridge using **myphp** as alias and while you are subscribing, you have specified **KUBERNETES_REPLICAS_MIN** property to **3**. Now, you feel that you need to have **10** minimum docker instances for your php cluster, due to seasonal sales. With manual scaling feature, you are only one command away.
+
+#### Curl Command
+```bash
+curl -X PUT -H "Content-Type: application/json" -d @manual-scaling.json -k -v -u admin:admin https://localhost:9443/stratos/admin/subscriptions/myphp/properties
+```
+
+#### CLI Command
+```bash
+update-subscription myphp -p ~/manual-scaling.json
+```
+#### manual-scaling.json
+```json
+{
+    "property": [
+            {
+             "name": "KUBERNETES_REPLICAS_MIN",
+             "value": "10"
+            }
+          ]    
+}
+```
+#### Response
+```bash
+Successfully updated subscription alias: myphp
+```
+
+After few minutes, when you list members, you should see at least 10 members in the cluster.
+
+#### CLI Command
+```bash
+list-members --alias myphp --cartridge-type php
+```
+
+Similarly, you could downgrade the minimum container count as well, using the same command.
+
+
+##8. Unsubscribe from a Cartridge
+
+#### Curl Command
 ```sh
 curl -X POST -H "Content-Type: application/json" -d 'myphp' -k -v -u admin:admin "https://localhost:9443/stratos/admin/cartridge/unsubscribe"
 ```
 
-##6. Accessing PHP service
-
-Currently accessing via Load Balancer is not supported. You could access the service via **http://{HOST_IP}:{SERVICE_PORT}**.
-
-In order to find the **SERVICE_PORT** issue following command in the Kubernetes Master Node.
-```sh
-kubecfg list services
+#### CLI Command
+```bash
+unsubscribe-cartridge -f myphp
 ```
-
-Then access from one of the following URLs:
-- http://172.17.8.100:{SERVICE_PORT}
-- http://172.17.8.101:{SERVICE_PORT}
-- http://172.17.8.102:{SERVICE_PORT}
 
 Jira List
 ----------
 
+    
 **Sub-task**
 
-- [STRATOS-730](https://issues.apache.org/jira/browse/STRATOS-730) - Puppet in docker image
-- [STRATOS-731](https://issues.apache.org/jira/browse/STRATOS-731) - Implement tagging of docker images with Stratos version numbers
-- [STRATOS-736](https://issues.apache.org/jira/browse/STRATOS-736) - create an updateable dns docker image
-- [STRATOS-737](https://issues.apache.org/jira/browse/STRATOS-737) - minimise size of stratos in docker images
-
+<ul>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-734'>STRATOS-734</a>] -         General Improvements to Stratos in docker image
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-764'>STRATOS-764</a>] -         use a maven docker plugin to build stratos docker images
+</li>
+</ul>
+            
 **Bug**
-- [STRATOS-598](https://issues.apache.org/jira/browse/STRATOS-598) - IaaS provider properties not included by automated product configuration script
-- [STRATOS-640](https://issues.apache.org/jira/browse/STRATOS-640) - Load balancer updates its Cluster Map every minute
-- [STRATOS-649](https://issues.apache.org/jira/browse/STRATOS-649) - CLI inconsistent handling of STRATOS_URL validation
-- [STRATOS-650](https://issues.apache.org/jira/browse/STRATOS-650) - command line mode does not accept options
-- [STRATOS-668](https://issues.apache.org/jira/browse/STRATOS-668) - Java.naming.provider.url is incorrect in HAProxy Extension jndi.properties file
-- [STRATOS-676](https://issues.apache.org/jira/browse/STRATOS-676) - LB shouldn't be re-writing http location header if Location is a hostname
-- [STRATOS-677](https://issues.apache.org/jira/browse/STRATOS-677) - Instances are getting spawn when unsubscribing
-- [STRATOS-682](https://issues.apache.org/jira/browse/STRATOS-682) - typo in class name
-- [STRATOS-685](https://issues.apache.org/jira/browse/STRATOS-685) - Resources got loaded from Registry when publishing events to BAM
-- [STRATOS-701](https://issues.apache.org/jira/browse/STRATOS-701) - References to 'incubator' in the code base
-- [STRATOS-702](https://issues.apache.org/jira/browse/STRATOS-702) - HAProxy Extension won't update it's member list
-- [STRATOS-706](https://issues.apache.org/jira/browse/STRATOS-706) - member terminate event should log reason
-- [STRATOS-707](https://issues.apache.org/jira/browse/STRATOS-707) - Remove wso2 slf4j from cartridge agent
-- [STRATOS-748](https://issues.apache.org/jira/browse/STRATOS-748) - Fails to deploy policies in UI.
-- [STRATOS-779](https://issues.apache.org/jira/browse/STRATOS-779) - Stratos is creating more instances than the max limit
-- [STRATOS-793](https://issues.apache.org/jira/browse/STRATOS-793) - Instructions to deploy a cartridge using the wizard is incorrect
-- [STRATOS-795](https://issues.apache.org/jira/browse/STRATOS-795) - Stratos forgets about cartridges if they disappear while Stratos isn't running
-- [STRATOS-798](https://issues.apache.org/jira/browse/STRATOS-798) - Error while login to Stratos in docker-integration branch
-- [STRATOS-802](https://issues.apache.org/jira/browse/STRATOS-802) - Partition deployment fails in EC2
-- [STRATOS-815](https://issues.apache.org/jira/browse/STRATOS-815) - Support HAProxy extension to default and service aware load balancer
-- [STRATOS-820](https://issues.apache.org/jira/browse/STRATOS-820) - Error when publishing tenant subscribed event
-- [STRATOS-823](https://issues.apache.org/jira/browse/STRATOS-823) - Incorporate isPublic and description properties at command line tool
-- [STRATOS-846](https://issues.apache.org/jira/browse/STRATOS-846) - Failed to process instance clean up using available message processors
-- [STRATOS-847](https://issues.apache.org/jira/browse/STRATOS-847) - Stratos LB mix up members of different multi-tenant clusters in 10x10 concurrency
-- [STRATOS-848](https://issues.apache.org/jira/browse/STRATOS-848) - NPE thrown when deploying cartridge definition
-- [STRATOS-849](https://issues.apache.org/jira/browse/STRATOS-849) - Stratos does not create specified min instance count in deployment policy
 
-**Improvements**
+<ul>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-641'>STRATOS-641</a>] -         LoadBalancer doesn&#39;t keep super-tenant subscriptions for a multi-tenant service
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-775'>STRATOS-775</a>] -         Error when trying to login as a tenant from Carbon UI
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-890'>STRATOS-890</a>] -         Users should be able to provide a Git repo url when subscribing
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-802'>STRATOS-802</a>] -         Partition deployment fails in EC2
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-814'>STRATOS-814</a>] -         Tenant admin permissions are persisted in UM_PERMISSION incorrectly.
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-818'>STRATOS-818</a>] -         Error log getting printed during the server start-up
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-882'>STRATOS-882</a>] -         [CLI] Invalid Error Handling at Login
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-883'>STRATOS-883</a>] -         CLI does not show error messages when unknown server errors occur
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-886'>STRATOS-886</a>] -         List Kubernetets Hosts method does to work in REST API
+</li>
+</ul>
+                
+**Improvement**
 
-- [STRATOS-651](https://issues.apache.org/jira/browse/STRATOS-651) - Add a CLI integration test suite
-- [STRATOS-686](https://issues.apache.org/jira/browse/STRATOS-686) - Windows NullPointerException for LoadBalancerConfigurationTest
-- [STRATOS-697](https://issues.apache.org/jira/browse/STRATOS-697) - Improvements for Clustering/simple grouping support in Stratos
-- [STRATOS-699](https://issues.apache.org/jira/browse/STRATOS-699) - HAProxy Puppet Configurations
-- [STRATOS-745](https://issues.apache.org/jira/browse/STRATOS-745) - Wiki - Add a section to explain Stratos configurations
-- [STRATOS-756](https://issues.apache.org/jira/browse/STRATOS-756) - Ability to pass any property via Partition definition
-- [STRATOS-763](https://issues.apache.org/jira/browse/STRATOS-763) - Re-organizing puppet modules structure
-- [STRATOS-768](https://issues.apache.org/jira/browse/STRATOS-768) - [Wiki] Reorganize Stratos wiki structure
-- [STRATOS-770](https://issues.apache.org/jira/browse/STRATOS-770) - Adding in a "Description" field to all definition types
-- [STRATOS-782](https://issues.apache.org/jira/browse/STRATOS-782) - Kubernetes based cartridge deployment
-- [STRATOS-790](https://issues.apache.org/jira/browse/STRATOS-790) - Messaging module refactoring to remove header based message distingushment
-- [STRATOS-791](https://issues.apache.org/jira/browse/STRATOS-791) - MQTT protocol support for the messaging module
-- [STRATOS-800](https://issues.apache.org/jira/browse/STRATOS-800) - Update REST endpoint with new authorization actions
-- [STRATOS-807](https://issues.apache.org/jira/browse/STRATOS-807) - Re-designing cluster monitor hierarchy to support any 'entity' monitors to be plugged in
-- [STRATOS-824](https://issues.apache.org/jira/browse/STRATOS-824) - [Wiki] Add troubleshooting steps - Newly created instance is not working
-
+<ul>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-873'>STRATOS-873</a>] -         [Sonar Findings] [Critical] Array is Stored Directly 
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-875'>STRATOS-875</a>] -         Abstracting out the Application and Group in the Topology
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-884'>STRATOS-884</a>] -         CLI has duplicated command implementations in RestCommandLineService class
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-885'>STRATOS-885</a>] -         CLI command classes are not using a proper naming convention
+</li>
+</ul>
+    
 **New Feature**
 
-- [STRATOS-777](https://issues.apache.org/jira/browse/STRATOS-777) - Introduce subscription filters to intercept a new subscription
-- [STRATOS-781](https://issues.apache.org/jira/browse/STRATOS-781) - Stratos Kubernetes Integration
-- [STRATOS-786](https://issues.apache.org/jira/browse/STRATOS-786) - Kubernetes Cluster Monitor to maintain the minimum number of replicas
-- [STRATOS-787](https://issues.apache.org/jira/browse/STRATOS-787) - Kubernetes Host Cluster Registration
-- [STRATOS-788](https://issues.apache.org/jira/browse/STRATOS-788) - Container API for Cloud Controller
-- [STRATOS-789](https://issues.apache.org/jira/browse/STRATOS-789) - Dynamic Host Port allocation
-- [STRATOS-799](https://issues.apache.org/jira/browse/STRATOS-799) - Stratos User Management and Permissions model
-- [STRATOS-801](https://issues.apache.org/jira/browse/STRATOS-801) - Introduce new API methods to create/update/delete users
+<ul>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-761'>STRATOS-761</a>] -         Tenant isolation for policies and definitions - in Autoscalar
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-785'>STRATOS-785</a>] -         Autoscaling Containers in Stratos
+</li>
+</ul>
+                                
+**Task**
 
-**Tasks**
+<ul>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-856'>STRATOS-856</a>] -         Need a wiki page for Performance Tuning
+</li>
+</ul>
 
-- [STRATOS-672](https://issues.apache.org/jira/browse/STRATOS-672) - Define convention wrt tabs/spaces
-- [STRATOS-719](https://issues.apache.org/jira/browse/STRATOS-719) - [Wiki] Describe all the configuration parameters in autoscaler.xml
-- [STRATOS-772](https://issues.apache.org/jira/browse/STRATOS-772) - Modify mock REST endpoint for 4.1.0 changes - tenant isolation and user mgmt
-- [STRATOS-822](https://issues.apache.org/jira/browse/STRATOS-822) - [Wiki] Document the debug logs that can be used to debug Stratos
-- [STRATOS-850](https://issues.apache.org/jira/browse/STRATOS-850) - Update puppet scripts to support MQTT configuration
 
 
 Troubleshooting Guide
