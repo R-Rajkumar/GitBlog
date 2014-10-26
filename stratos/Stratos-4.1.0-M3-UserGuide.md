@@ -18,6 +18,7 @@ Main Features
 - Auto scaling Docker Containers
 - Manual scaling Docker Containers
 - CLI support for Docker deployments
+- Python Cartridge Agent
 - VM LB support for dockers
 - Private docker registry
 - Support updating autoscale policies at runtime
