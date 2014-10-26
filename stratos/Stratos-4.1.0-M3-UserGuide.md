@@ -125,6 +125,17 @@ Setting up Stratos Load Balancer
 Testing M3
 ----------
 
+- [1. Register Kubernetes-CoreOS Host Cluster in Stratos](#1-register-kubernetes-coreos-host-cluster-in-stratos)
+- [2. Deploy a Docker Cartridge](#2-deploy-a-docker-cartridge)
+- [3. Deploy the autoscale policy](#3-deploy-the-autoscale-policy)
+- [4. Subscribe to a Docker Cartridge](#4-subscribe-to-a-docker-cartridge)
+- [5. Accessing PHP service via Stratos Load Balancer](#5-accessing-php-service-via-stratos-load-balancer)
+- [6. Testing Autoscaling](#6-testing-autoscaling)
+- [7. Testing Manual Scaling](#7-testing-manual-scaling)
+- [8. Testing Updating Autoscale Policies at Runtime](#8-testing-updating-autoscale-policies-at-runtime)
+- [9. Testing Stratos Load Balancer](#9-testing-stratos-load-balancer)
+- [10. Unsubscribe from a Cartridge](#10-unsubscribe-from-a-cartridge)
+
 ##1. Register Kubernetes-CoreOS Host Cluster in Stratos
 
 ### Curl Command
