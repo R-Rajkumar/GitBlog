@@ -328,7 +328,7 @@ deploy-autoscaling-policy -p autoscale-policy.json
          "lowerLimit": 15
       },
       "loadAverage": {
-         "upperLimit": 180,
+         "upperLimit": 80,
          "lowerLimit": 20
       }
     }
@@ -358,7 +358,7 @@ subscribe-cartridge --autoscaling-policy economy -p php-subscription.json
     "alias": "myphp",
     "commitsEnabled": "false",
     "autoscalePolicy": "economy",
-    "repoURL": "https://github.com/sajhak/myphprepo",
+    "repoURL": "https://github.com/R-Rajkumar/php-hello-world.git",
     "property": [
             {
              "name": "KUBERNETES_CLUSTER_ID",
@@ -386,11 +386,15 @@ subscribe-cartridge --autoscaling-policy economy -p php-subscription.json
             },       
             {
              "name": "payload_parameter.CEP_PORT",
-             "value": "7611"
+             "value": "7711"
             },       
             {
              "name": "payload_parameter.APP_PATH",
              "value": "/var/www"
+            },
+            {
+           "name":"payload_parameter.LOG_LEVEL",
+           "value":"DEBUG"
             }
           ]    
 }
