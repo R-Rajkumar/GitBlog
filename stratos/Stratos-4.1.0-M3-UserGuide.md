@@ -612,9 +612,9 @@ Jira List
 **New Feature**
 
 <ul>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-761'>STRATOS-761</a>] -         Tenant isolation for policies and definitions - in Autoscalar
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-#'>STRATOS-#</a>] -             Private Docker Registry
 </li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-785'>STRATOS-785</a>] -         Autoscaling Containers in Stratos
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-#'>STRATOS-#</a>] -             Updating policies at runtime
 </li>
 </ul>
                                 
