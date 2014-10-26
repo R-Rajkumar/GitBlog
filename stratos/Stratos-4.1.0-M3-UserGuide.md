@@ -402,7 +402,7 @@ subscribe-cartridge --autoscaling-policy economy -p php-subscription.json
             },       
             {
              "name": "payload_parameter.APP_PATH",
-             "value": "/var/www"
+             "value": "/var/www/www"
             },
             {
              "name":"payload_parameter.LOG_LEVEL",
