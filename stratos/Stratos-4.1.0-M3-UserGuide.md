@@ -401,48 +401,23 @@ subscribe-cartridge --autoscaling-policy economy -p php-subscription.json
 
 ```
 
-##5. Accessing PHP service
+##5. Accessing PHP service via Stratos Load Balancer
 
-Currently accessing via Load Balancer is not supported. You could access the service via **http://{MemberPrivateIp}:{ALLOCATED_SERVICE_HOST_PORT}**.
-
-In order to find the **MemberPrivateIp** and **ALLOCATED_SERVICE_HOST_PORT** issue following CLI command.
-#### CLI Command
-```bash
-list-members --alias myphp --cartridge-type php
-```
-#### Response
-```bash
-
-List of members in the [cluster]: myphp
-
-	ServiceName : php
-	ClusterId : myphp.php.domain
-	Status : Created
-	MemberPrivateIp : 172.17.8.100
-	MemberFloatingIp : 172.17.8.100
-	Member Properties : [Property [name=ALLOCATED_SERVICE_HOST_PORT, value=4506]]
-	-----------------------
-
-	ServiceName : php
-	ClusterId : myphp.php.domain
-	Status : Created
-	MemberPrivateIp : 172.17.8.101
-	MemberFloatingIp : 172.17.8.101
-	Member Properties : [Property [name=ALLOCATED_SERVICE_HOST_PORT, value=4506]]
-	-----------------------
-==================================================
-List of LB members for the [cluster]: myphp
-==================================================
-```
-Or else you can simply try one of the following URLs:
-- http://172.17.8.100:{ALLOCATED_SERVICE_HOST_PORT}
-- http://172.17.8.101:{ALLOCATED_SERVICE_HOST_PORT}
-- http://172.17.8.102:{ALLOCATED_SERVICE_HOST_PORT}
+* Map LB's IP to cluster hostname in /etc/hosts file. Clust hostname can be found in Stratos Management Console under subscribed cartridges
+   
+ For example add the following entry to your /etc/hosts file.
+    ```bash
+        127.0.0.1  myphp.apachestratos.org
+    ```
+* Access php service via http://{clusterHostname}:{proxyPort}
+    
+    For example, access via  [http://myphp.apachestratos.org:8281](http://myphp.apachestratos.org:8281/)
+    
 
 
 ##6. Testing Autoscaling
 
-Currently autoscaling works based on CPU and Memory usage. You can stress docker containers using stress tool. The given docker image alredy have this tool.
+Autoscaling works based on requests in flight, CPU and Memory usage. You can stress docker containers using stress tool. The given docker image alredy have this tool.
 
 - ssh to the coreos node which is having containers (see trouble shoot guide at the end)
 
