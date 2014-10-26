@@ -607,19 +607,7 @@ Jira List
 </li>
 
 </ul>
-                
-**Improvement**
 
-<ul>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-873'>STRATOS-873</a>] -         [Sonar Findings] [Critical] Array is Stored Directly 
-</li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-875'>STRATOS-875</a>] -         Abstracting out the Application and Group in the Topology
-</li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-884'>STRATOS-884</a>] -         CLI has duplicated command implementations in RestCommandLineService class
-</li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-885'>STRATOS-885</a>] -         CLI command classes are not using a proper naming convention
-</li>
-</ul>
     
 **New Feature**
 
