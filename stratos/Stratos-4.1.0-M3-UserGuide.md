@@ -513,13 +513,26 @@ list-members --alias myphp --cartridge-type php
 
 Similarly, you could downgrade the minimum container count as well, using the same command.
 
-##8. Testing Stratos Load Balancer
+##8. Testing Updating Autoscale Policies at Runtime
+Users are able to update autoscale policy on the fly. Autoscaler will take these effects immediately.
+#### CLI Command
+```bash
+update-autoscaling-policy -p autoscale-policy.json
+```
+
+#### Response
+```bash
+Successfully updated autoscale policy: economy
+```
+
+
+##9. Testing Stratos Load Balancer
 
 * Shutdown the LB, if started already
 * Change the **log4j.logger.org.apache.stratos.load.balancer**  elements' values in **{STRATOS_LB_HOME}/repository/conf/log4j.properties** to **DEBUG**
 * Restart the LB
 * Access the PHP service via LB for couple of times. 
-* Observe LB logs; You will see LB distributing requests to the Kubernetes Service Proxies; 
+* Observe LB logs. You will see LB distributing requests to the Kubernetes Service Proxies.
 * A sample log looks like below; You can see LB distributing requests Kubernetes Service Proxy endpoints http://172.17.8.101:4503/ and http://172.17.8.102:4503/
 
     ```bash
@@ -561,7 +574,7 @@ Similarly, you could downgrade the minimum container count as well, using the sa
 [2014-10-24 16:39:49,563] DEBUG - ResponseInterceptor Response interceptor mediation started
     ```
 
-##9. Unsubscribe from a Cartridge
+##10. Unsubscribe from a Cartridge
 
 #### Curl Command
 ```sh
