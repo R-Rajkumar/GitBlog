@@ -15,48 +15,83 @@ Main Features
 -------------
 
 - [Docker](https://www.docker.com/) support using [Google Kubernetes](https://github.com/GoogleCloudPlatform/kubernetes) and [CoreOS](https://coreos.com/)
-- VM LB support for dockers
-- Private docker registry
 - Auto scaling Docker Containers
 - Manual scaling Docker Containers
 - CLI support for Docker deployments
+- VM LB support for dockers
+- Private docker registry
+- Support updating autoscale policies at runtime
 - [MQTT](http://mqtt.org/) support (removal of JNDI)
 
 
 Pre-requisite
 -------------
 
-- Setting up the Kubernetes-CoreOS cluster in your local machine
-    * Install [Vagrant 1.6.5](https://www.vagrantup.com/) and [Oracle VM VirtualBox Manager 4.3.14](https://www.virtualbox.org/) in your local machine.
-    * Get a GIT clone of [Vagrant Kubernetes Setup](https://github.com/nirmal070125/vagrant-kubernetes-setup) onto your machine.
-    * Navigate to the cloned repository directory (**SETUP_HOME**).
-    * Run ``` up.sh ``` script file - ``` {SETUP_HOME}$ ./up.sh ``` (You might have to use ```sudo``` in some cases.)
-    * Above command will start-up 4 VMs, namely discovery, master, minion-1 and minion-2.
-    * SSH to master node ; ``` {SETUP_HOME}$ vagrant ssh master ```
-    * Pull Stratos PHP Docker Image from [DockerHub](https://registry.hub.docker.com/u/apachestratos/php/tags/manage/) into master node or into the local machine.
+- [Setting up the Kubernetes-CoreOS cluster in your local machine](#Setting up the Kubernetes-CoreOS cluster)
+- [Setting up a private docker registry](#Setting up a private docker registry)
+- [Setting up Stratos](#Setting up Stratos)
+ 
+Setting up the Kubernetes-CoreOS cluster
+-----------------------------------------
+* Install [Vagrant 1.6.5](https://www.vagrantup.com/) and [Oracle VM VirtualBox Manager 4.3.14](https://www.virtualbox.org/) in your local machine.
+* Get a GIT clone of [Vagrant Kubernetes Setup](https://github.com/nirmal070125/vagrant-kubernetes-setup) onto your machine.
+* Navigate to the cloned repository directory (**SETUP_HOME**).
+* Run ``` up.sh ``` script file - ``` {SETUP_HOME}$ ./up.sh ``` (You might have to use ```sudo``` in some cases.)
+* Above command will start-up 4 VMs, namely discovery, master, minion-1 and minion-2.
+
+Setting up a private docker registry
+------------------------------------
+
+* Install docker in your machine
+* Start a docker registry
     ``` sh 
-    docker pull apachestratos/php:4.1.0-m2 
+    docker run -d -p 5000:5000 registry 
     ```
-    * Import downloaded Stratos PHP Docker image as a tarball.
-    ```sh
-    docker save -o stratos-php-latest.tar  apachestratos/php:4.1.0-m2 
-    ```     
-    * SCP the Stratos PHP Docker Image tarball to minion-1 and minion-2. You can find the private key file which you can use to SCP, in the **{SETUP_HOME}/ssh.config** file, against **IdentityFile** attribute. 
-    ``` sh
-    scp -i ~/.vagrant.d/insecure_private_key stratos-php-latest.tar core@172.17.8.101:.
-    ```
-    * SSH to minion-1 (``` {SETUP_HOME}$ vagrant ssh minion-1 ```) and minion-2 (``` {SETUP_HOME}$ vagrant ssh minion-2```)
-    * Load Stratos PHP Docker Image from tarball to minion-1 and minion-2
-    ```sh
-    docker load -i stratos-php-latest.tar
-    ```   
-    * Verify that the image is properly loaded by issuing ```docker images``` in each node;
+    This will pull the image ‘registry’ from docker hub and startup the registry container
+    
+* Verify that the registry image is properly loaded by issuing ```docker images``` in your machine;
     ```sh
     core@master ~ $ docker images
-    REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-    apachestratos/php   4.1.0-m2            434d3f9da2eb        13 hours ago        705.4 MB
+    REPOSITORY                TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+    registry                  latest              5562556b14f9        4 days ago          422.9 MB
+ 
+   ```
+* Verify that the registry container is properly started by issuing ```docker ps``` in your machine;
+    ```sh
+    core@master ~ $ docker ps
+    CONTAINER ID        IMAGE                COMMAND                CREATED         STATUS   PORTS
+    5cfe0571f199        registry:latest      /bin/sh -c 'exec doc   33 hours ago    Up       0.0.0.0:5000->5000/tcp
+    ```
+   
+* Pull Stratos PHP docker image from [DockerHub](https://registry.hub.docker.com/u/chamilad/stratos-php-py/tags/manage/) into the local machine.
+    ``` sh 
+    docker pull chamilad/stratos-php-py:4.1.0-m3
+    ```
+   
+* Verify that Stratos PHP docker image is properly loaded by issuing ```docker images``` in your machine;
+    ```sh
+    core@master ~ $ docker images
+    REPOSITORY                TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+    chamilad/stratos-php-py   4.1.0-m3            2a589523d617        13 hours ago        471.2 MB
     ```
 
+* Tag Stratos PHP docker image to map with your private docker registry
+    ```sh
+    docker tag <image-name>  <registry-ip>:<registry-port>/<image-name>
+    ```
+    For example, if your docker registry machine IP is 172.17.42.1
+    ```sh
+    docker tag chamilad/stratos-php-py:4.1.0-m3  172.17.42.1:5000/php:4.1.0-m3
+    ```
+
+* Push the image
+    ```sh
+    docker push 172.17.42.1:5000/php:4.1.0-m3
+    ```
+* Now you can use ```172.17.42.1:5000/php:4.1.0-m3``` as the image name in cartridge definition json
+    
+Setting up Stratos
+------------------
 - Download and extract [Apache ActiveMQ 5.10.0 or later](http://activemq.apache.org/) and start ActiveMQ - ``` {ACTIVEMQ_HOME}$ ./bin/activemq start ```
   Please make sure mqtt transport connector is enabled in the ActiveMQ configuration file; **{ACTIVEMQ_HOME}/conf/activemq.xml**.
 
@@ -68,9 +103,20 @@ Pre-requisite
 
 - Change the property named **"java.naming.provider.url"** value to **tcp://{MB_IP}:61616** in **{STRATOS_HOME}/repository/deployment/server/outputeventadaptors/JMSOutputAdaptor.xml** file.
 
-- Change the **expiryTimeout** element's value in **{STRATOS_HOME}/repository/conf/autoscaler.xml** to **30000** (it is the maximum time a member can be in the pending state)
-
 - Start Stratos using ``` {STRATOS_HOME}$ ./bin/stratos.sh start ``` command.
+
+Setting up Stratos Load Balancer
+--------------------------------
+
+- Build Stratos master code, copy (from {**STRATOS_SOURCE}/products/load-balancer/modules/distribution/target/**) and extract the binary **apache-stratos-load-balancer-4.1.0-SNAPSHOT.zip** to a preferred directory (**STRATOS_LB_HOME**). 
+ 
+- Change the **Offset** elements' values in **{STRATOS_LB_HOME}/repository/conf/carbon.xml** to 1 or whatever other than 0. You need to do this only if you are running Stratos and LB in the same machine.
+
+- Change the **cep-ip**  elements' values in **{STRATOS_LB_HOME}/repository/conf/loadbalancer.conf** to the private IP address of your machine where CEP is running.
+
+- Change the **cep-port**  elements' values in **{STRATOS_LB_HOME}/repository/conf/loadbalancer.conf** to **7611**, the CEP port.
+
+- Change the **cep-stats-publisher**  elements' values in **{STRATOS_LB_HOME}/repository/conf/loadbalancer.conf** to **true**, so that LB will publish stats to CEP.
 
 
 Testing M3
