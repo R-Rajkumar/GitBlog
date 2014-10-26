@@ -393,8 +393,8 @@ subscribe-cartridge --autoscaling-policy economy -p php-subscription.json
              "value": "/var/www"
             },
             {
-           "name":"payload_parameter.LOG_LEVEL",
-           "value":"DEBUG"
+             "name":"payload_parameter.LOG_LEVEL",
+             "value":"DEBUG"
             }
           ]    
 }
