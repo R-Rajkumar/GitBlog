@@ -589,36 +589,23 @@ Jira List
 ----------
 
     
-**Sub-task**
+**Improvement**
 
 <ul>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-734'>STRATOS-734</a>] -         General Improvements to Stratos in docker image
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-889'>STRATOS-889</a>] -         Move all drools files to a new folder under repository/conf
 </li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-764'>STRATOS-764</a>] -         use a maven docker plugin to build stratos docker images
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-891'>STRATOS-891</a>] -         Different type of cluster monitors should be able to have different monitoring interval
 </li>
 </ul>
             
 **Bug**
 
 <ul>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-641'>STRATOS-641</a>] -         LoadBalancer doesn&#39;t keep super-tenant subscriptions for a multi-tenant service
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-893'>STRATOS-893</a>] -         Member initiated time is not persisted when shutting down stratos
 </li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-775'>STRATOS-775</a>] -         Error when trying to login as a tenant from Carbon UI
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-859'>STRATOS-859</a>] -         Unknown host name exception when accessing VM instances via LB
 </li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-890'>STRATOS-890</a>] -         Users should be able to provide a Git repo url when subscribing
-</li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-802'>STRATOS-802</a>] -         Partition deployment fails in EC2
-</li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-814'>STRATOS-814</a>] -         Tenant admin permissions are persisted in UM_PERMISSION incorrectly.
-</li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-818'>STRATOS-818</a>] -         Error log getting printed during the server start-up
-</li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-882'>STRATOS-882</a>] -         [CLI] Invalid Error Handling at Login
-</li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-883'>STRATOS-883</a>] -         CLI does not show error messages when unknown server errors occur
-</li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-886'>STRATOS-886</a>] -         List Kubernetets Hosts method does to work in REST API
-</li>
+
 </ul>
                 
 **Improvement**
@@ -643,13 +630,6 @@ Jira List
 </li>
 </ul>
                                 
-**Task**
-
-<ul>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-856'>STRATOS-856</a>] -         Need a wiki page for Performance Tuning
-</li>
-</ul>
-
 
 
 Troubleshooting Guide
