@@ -118,6 +118,8 @@ Setting up Stratos Load Balancer
 
 - Change the **cep-stats-publisher**  elements' values in **{STRATOS_LB_HOME}/repository/conf/loadbalancer.conf** to **true**, so that LB will publish stats to CEP.
 
+- Start Stratos LB using ``` {STRATOS_LB_HOME}$ ./bin/stratos.sh start ``` command.
+
 
 Testing M3
 ----------
@@ -279,12 +281,12 @@ deploy-cartridge -p php-docker-cartridge.json
          {
             "protocol": "http",
             "port": "80",
-            "proxyPort": "8280"
+            "proxyPort": "8281"
          }
        ],
        "container": [
         {
-          "imageName": "apachestratos/php:4.1.0-m2",
+          "imageName": "172.17.42.1:5000/php:4.1.0-m3",
           "property": [
             {
              "name": "prop-name",
@@ -295,6 +297,9 @@ deploy-cartridge -p php-docker-cartridge.json
       ]
  }
 ```
+
+* Change **imageName** according to your private docker registry.
+* Change **proxyPort** accoring to your LB's port offset. For example if your LB's port offset is  **1**, then use **8281** as **proxyPort**.
 
 ##3. Deploy the autoscale policy
 
