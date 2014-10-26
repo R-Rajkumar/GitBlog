@@ -40,7 +40,7 @@ Setting up Kubernetes-CoreOS cluster
 * Run ``` up.sh ``` script file - ``` {SETUP_HOME}$ ./up.sh ``` (You might have to use ```sudo``` in some cases.)
 * Above command will start-up 4 VMs, namely discovery, master, minion-1 and minion-2.
 
-Setting up a private docker registry
+Setting up a Private Docker Registry
 ------------------------------------
 
 * Install docker in your machine
@@ -524,7 +524,6 @@ update-autoscaling-policy -p autoscale-policy.json
 ```bash
 Successfully updated autoscale policy: economy
 ```
-
 
 ##9. Testing Stratos Load Balancer
 
