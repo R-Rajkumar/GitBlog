@@ -27,11 +27,12 @@ Main Features
 Pre-requisite
 -------------
 
-- [Setting up the Kubernetes-CoreOS cluster in your local machine](#Setting up the Kubernetes-CoreOS cluster)
-- [Setting up a private docker registry](#Setting up a private docker registry)
-- [Setting up Stratos](#Setting up Stratos)
+- [Setting up Kubernetes-CoreOS cluster in your local machine](#setting-up-kubernetes-coreos-cluster)
+- [Setting up a private docker registry](#setting-up-a-private-docker-registry)
+- [Setting up Stratos](#setting-up-stratos)
+- [Setting up Stratos Load Balancer](#setting-up-stratos-load-balancer)
  
-Setting up the Kubernetes-CoreOS cluster
+Setting up Kubernetes-CoreOS cluster
 -----------------------------------------
 * Install [Vagrant 1.6.5](https://www.vagrantup.com/) and [Oracle VM VirtualBox Manager 4.3.14](https://www.virtualbox.org/) in your local machine.
 * Get a GIT clone of [Vagrant Kubernetes Setup](https://github.com/nirmal070125/vagrant-kubernetes-setup) onto your machine.
