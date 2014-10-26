@@ -419,7 +419,7 @@ subscribe-cartridge --autoscaling-policy economy -p php-subscription.json
 
 Autoscaling works based on requests in flight, CPU and Memory usage. 
 
-### Increasing Load Average
+### Verify autoscaling by increasing Load Average
 
 You can stress docker containers using stress tool. The given docker image alredy have this tool.
 
@@ -436,7 +436,7 @@ stress -c 4
 - check the growing member list
 
 
-### Increasing Requests In Flight
+### Verify autoscaling by increasing Requests In Flight
 
 You can increase requests in flight count with tools like JMeter
 
@@ -513,8 +513,55 @@ list-members --alias myphp --cartridge-type php
 
 Similarly, you could downgrade the minimum container count as well, using the same command.
 
+##8. Testing Stratos Load Balancer
 
-##8. Unsubscribe from a Cartridge
+* Shutdown the LB, if started already
+* Change the **log4j.logger.org.apache.stratos.load.balancer**  elements' values in **{STRATOS_LB_HOME}/repository/conf/log4j.properties** to **DEBUG**
+* Restart the LB
+* Access the PHP service via LB for couple of times. 
+* Observe LB logs; You will see LB distributing requests to the Kubernetes Service Proxies; 
+* A sample log looks like below; You can see LB distributing requests Kubernetes Service Proxy endpoints http://172.17.8.101:4503/ and http://172.17.8.102:4503/
+
+    ```bash
+[2014-10-24 16:39:42,901] DEBUG - TenantAwareLoadBalanceEndpoint Multi-tenancy enabled, scanning URL for tenant...
+[2014-10-24 16:39:42,901] DEBUG - TenantAwareLoadBalanceEndpoint Request URL: / 
+[2014-10-24 16:39:42,902] DEBUG - TenantAwareLoadBalanceEndpoint Tenant identifier regex: t/([^/]*)/ 
+[2014-10-24 16:39:42,902] DEBUG - TenantAwareLoadBalanceEndpoint Tenant identifier not found in URL
+[2014-10-24 16:39:42,902] DEBUG - RoundRobin Searching for next member: [service] php [cluster]: myphp.php.domain [member-count]: 2 [current-index] 0
+[2014-10-24 16:39:42,902] DEBUG - LoadBalancerCache Cached property: [cache] algorithm.context.cache [property] php-myphp.php.domain [value] 1
+[2014-10-24 16:39:42,902] DEBUG - RequestDelegator Next member identified in 0ms: [service] php [cluster] myphp.php.domain [member] c6380d6a-5b6d-11e4-816c-08002794b041
+[2014-10-24 16:39:42,902] DEBUG - TenantAwareLoadBalanceEndpoint Using member IP address: [member] c6380d6a-5b6d-11e4-816c-08002794b041 [ip] 172.17.8.101
+[2014-10-24 16:39:42,902] DEBUG - TenantAwareLoadBalanceEndpoint Updating axis2 member port
+[2014-10-24 16:39:42,902] DEBUG - TenantAwareLoadBalanceEndpoint Outgoing request port found: 4503
+[2014-10-24 16:39:42,902] DEBUG - TenantAwareLoadBalanceEndpoint Sending request to endpoint:http://172.17.8.101:4503/
+[2014-10-24 16:39:42,908] DEBUG - ResponseInterceptor Response interceptor mediation started
+[2014-10-24 16:39:46,671] DEBUG - TenantAwareLoadBalanceEndpoint Multi-tenancy enabled, scanning URL for tenant...
+[2014-10-24 16:39:46,672] DEBUG - TenantAwareLoadBalanceEndpoint Request URL: / 
+[2014-10-24 16:39:46,672] DEBUG - TenantAwareLoadBalanceEndpoint Tenant identifier regex: t/([^/]*)/ 
+[2014-10-24 16:39:46,672] DEBUG - TenantAwareLoadBalanceEndpoint Tenant identifier not found in URL
+[2014-10-24 16:39:46,672] DEBUG - RoundRobin Searching for next member: [service] php [cluster]: myphp.php.domain [member-count]: 2 [current-index] 1
+[2014-10-24 16:39:46,672] DEBUG - LoadBalancerCache Cached property: [cache] algorithm.context.cache [property] php-myphp.php.domain [value] 0
+[2014-10-24 16:39:46,672] DEBUG - RequestDelegator Next member identified in 0ms: [service] php [cluster] myphp.php.domain [member] c6385923-5b6d-11e4-816c-08002794b041
+[2014-10-24 16:39:46,672] DEBUG - TenantAwareLoadBalanceEndpoint Using member IP address: [member] c6385923-5b6d-11e4-816c-08002794b041 [ip] 172.17.8.102
+[2014-10-24 16:39:46,672] DEBUG - TenantAwareLoadBalanceEndpoint Updating axis2 member port
+[2014-10-24 16:39:46,672] DEBUG - TenantAwareLoadBalanceEndpoint Outgoing request port found: 4503
+[2014-10-24 16:39:46,673] DEBUG - TenantAwareLoadBalanceEndpoint Sending request to endpoint:http://172.17.8.102:4503/
+[2014-10-24 16:39:46,678] DEBUG - ResponseInterceptor Response interceptor mediation started
+[2014-10-24 16:39:49,554] DEBUG - TenantAwareLoadBalanceEndpoint Multi-tenancy enabled, scanning URL for tenant...
+[2014-10-24 16:39:49,555] DEBUG - TenantAwareLoadBalanceEndpoint Request URL: / 
+[2014-10-24 16:39:49,555] DEBUG - TenantAwareLoadBalanceEndpoint Tenant identifier regex: t/([^/]*)/ 
+[2014-10-24 16:39:49,555] DEBUG - TenantAwareLoadBalanceEndpoint Tenant identifier not found in URL
+[2014-10-24 16:39:49,555] DEBUG - RoundRobin Searching for next member: [service] php [cluster]: myphp.php.domain [member-count]: 2 [current-index] 0
+[2014-10-24 16:39:49,556] DEBUG - LoadBalancerCache Cached property: [cache] algorithm.context.cache [property] php-myphp.php.domain [value] 1
+[2014-10-24 16:39:49,556] DEBUG - RequestDelegator Next member identified in 1ms: [service] php [cluster] myphp.php.domain [member] c6380d6a-5b6d-11e4-816c-08002794b041
+[2014-10-24 16:39:49,556] DEBUG - TenantAwareLoadBalanceEndpoint Using member IP address: [member] c6380d6a-5b6d-11e4-816c-08002794b041 [ip] 172.17.8.101
+[2014-10-24 16:39:49,556] DEBUG - TenantAwareLoadBalanceEndpoint Updating axis2 member port
+[2014-10-24 16:39:49,557] DEBUG - TenantAwareLoadBalanceEndpoint Outgoing request port found: 4503
+[2014-10-24 16:39:49,557] DEBUG - TenantAwareLoadBalanceEndpoint Sending request to endpoint:http://172.17.8.101:4503/
+[2014-10-24 16:39:49,563] DEBUG - ResponseInterceptor Response interceptor mediation started
+    ```
+
+##9. Unsubscribe from a Cartridge
 
 #### Curl Command
 ```sh
