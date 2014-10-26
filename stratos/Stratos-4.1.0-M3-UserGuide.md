@@ -417,7 +417,11 @@ subscribe-cartridge --autoscaling-policy economy -p php-subscription.json
 
 ##6. Testing Autoscaling
 
-Autoscaling works based on requests in flight, CPU and Memory usage. You can stress docker containers using stress tool. The given docker image alredy have this tool.
+Autoscaling works based on requests in flight, CPU and Memory usage. 
+
+### Increasing Load Average
+
+You can stress docker containers using stress tool. The given docker image alredy have this tool.
 
 - ssh to the coreos node which is having containers (see trouble shoot guide at the end)
 
@@ -427,9 +431,18 @@ Autoscaling works based on requests in flight, CPU and Memory usage. You can str
 ```sh
 stress -c 4
 ```
-- observe the stratos log, you will get drools logs with respect to scaling.
+- observe the stratos log, you will get drools logs with respect to scaling
 
-- check the growing member list.
+- check the growing member list
+
+
+### Increasing Requests In Flight
+
+You can increase requests in flight count with tools like JMeter
+
+- do a load test with HTTP sampler for PHP service (http://{clusterHostname}:{proxyPort}
+- observe the stratos log, you will get drools logs with respect to scaling
+- check the growing member list
 
 #### CLI Command
 ```bash
@@ -481,7 +494,7 @@ update-subscription myphp -p ~/manual-scaling.json
     "property": [
             {
              "name": "KUBERNETES_REPLICAS_MIN",
-             "value": "10"
+             "value": "5"
             }
           ]    
 }
