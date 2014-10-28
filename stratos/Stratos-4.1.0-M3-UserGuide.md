@@ -601,7 +601,7 @@ Jira List
 ----------
 
     
-**New Feature**
+**New Features**
 
 <ul>
 <li>[<a href='https://issues.apache.org/jira/browse/STRATOS-792'>STRATOS-792</a>] -         Python Cartridge Agent
@@ -612,7 +612,7 @@ Jira List
 </li>
 </ul>
     
-**Improvement**
+**Improvements**
 
 <ul>
 <li>[<a href='https://issues.apache.org/jira/browse/STRATOS-889'>STRATOS-889</a>] -         Move all drools files to a new folder under repository/conf
@@ -621,7 +621,7 @@ Jira List
 </li>
 </ul>
             
-**Bug**
+**Bugs**
 
 <ul>
 <li>[<a href='https://issues.apache.org/jira/browse/STRATOS-893'>STRATOS-893</a>] -         Member initiated time is not persisted when shutting down stratos
