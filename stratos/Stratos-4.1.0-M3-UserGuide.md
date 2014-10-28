@@ -628,7 +628,8 @@ Jira List
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/STRATOS-859'>STRATOS-859</a>] -         Unknown host name exception when accessing VM instances via LB
 </li>
-
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-888'>STRATOS-888</a>] -         [MQTT] When debug logs enabled for Messaging component - messaging model dead locks
+</li>
 </ul>
 
 
