@@ -149,7 +149,7 @@ curl -X POST -H "Content-Type: application/json" -d @"kub-register.json" -k  -u 
 deploy-kubernetes-group -p kub-register.json
 ```
 
-- Please refer support using [Apache Stratos CLI Tool](https://cwiki.apache.org/confluence/display/STRATOS/4.1.0+Configuring+CLI+Tool) to configure CLI tool
+- Please refer support using [Apache Stratos CLI Tool](https://cwiki.apache.org/confluence/display/STRATOS/4.1.0+Configuring+the+CLI+Tool) to configure CLI tool
 
 #### kub-register.json
 ```json
