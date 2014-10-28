@@ -640,6 +640,8 @@ Jira List
 **Known Issues**
 
 <ul>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-862'>STRATOS-862</a>] -         Kubernetes scheduler needs to be restarted every 15 min or so
+</li>
 <li>[<a href='https://issues.apache.org/jira/browse/STRATOS-919'>STRATOS-919</a>] -         Error while AS asks CC to terminate an instance that are not in the topology
 </li>
 </ul>
