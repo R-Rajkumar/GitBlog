@@ -74,7 +74,7 @@ Setting up a Private Docker Registry
     ```sh
     core@master ~ $ docker images
     REPOSITORY                  TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-    apachestratos/php           4.1.0-m3            2a589523d617        13 hours ago        471.2 MB
+    apachestratos/php           4.1.0-m3            06c311eb9c66        13 hours ago        471.9 MB
     ```
 
 * Tag Stratos PHP docker image to map with your private docker registry
