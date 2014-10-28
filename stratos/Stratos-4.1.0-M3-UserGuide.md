@@ -506,7 +506,7 @@ update-subscription myphp -p ~/manual-scaling.json
     "property": [
             {
              "name": "KUBERNETES_REPLICAS_MIN",
-             "value": "5"
+             "value": "10"
             }
           ]    
 }
