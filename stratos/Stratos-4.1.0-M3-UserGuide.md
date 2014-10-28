@@ -67,14 +67,14 @@ Setting up a Private Docker Registry
    
 * Pull Stratos PHP docker image from [DockerHub](https://registry.hub.docker.com/u/apachestratos/stratos-php-py/tags/manage/) into the local machine.
     ``` sh 
-    docker pull apachestratos/stratos-php:4.1.0-m3
+    docker pull apachestratos/php:4.1.0-m3
     ```
    
 * Verify that Stratos PHP docker image is properly loaded by issuing ```docker images``` in your machine;
     ```sh
     core@master ~ $ docker images
     REPOSITORY                  TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-    apachestratos/stratos-php   4.1.0-m3            2a589523d617        13 hours ago        471.2 MB
+    apachestratos/php           4.1.0-m3            2a589523d617        13 hours ago        471.2 MB
     ```
 
 * Tag Stratos PHP docker image to map with your private docker registry
@@ -83,7 +83,7 @@ Setting up a Private Docker Registry
     ```
     For example, if your docker registry machine IP is 172.17.42.1
     ```sh
-    docker tag apachestratos/stratos-php:4.1.0-m3  172.17.42.1:5000/php:4.1.0-m3
+    docker tag apachestratos/php:4.1.0-m3  172.17.42.1:5000/php:4.1.0-m3
     ```
 
 * Push the image
