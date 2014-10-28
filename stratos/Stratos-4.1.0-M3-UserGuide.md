@@ -619,6 +619,8 @@ Jira List
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/STRATOS-891'>STRATOS-891</a>] -         Different type of cluster monitors should be able to have different monitoring interval
 </li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-911'>STRATOS-911</a>] -         VM and Container members should be able to have different expiry timeouts
+</li>
 </ul>
             
 **Bugs**
