@@ -534,7 +534,7 @@ update-autoscaling-policy -p autoscale-policy.json
 
 #### Response
 ```bash
-Successfully updated autoscale policy: economy
+Successfully updated autoscaling policy
 ```
 
 ##9. Testing Stratos Load Balancer
