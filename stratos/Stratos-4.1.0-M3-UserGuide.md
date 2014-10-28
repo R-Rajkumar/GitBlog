@@ -608,7 +608,7 @@ Jira List
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/STRATOS-#'>STRATOS-#</a>] -             Private Docker Registry
 </li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-#'>STRATOS-#</a>] -             Updating policies at runtime
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-896'>STRATOS-896</a>] -         Updating policies at runtime
 </li>
 </ul>
     
