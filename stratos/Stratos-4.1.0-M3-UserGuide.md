@@ -65,7 +65,7 @@ Setting up a Private Docker Registry
     5cfe0571f199        registry:latest      /bin/sh -c 'exec doc   33 hours ago    Up       0.0.0.0:5000->5000/tcp
     ```
    
-* Pull Stratos PHP docker image from [DockerHub](https://registry.hub.docker.com/u/apachestratos/stratos-php-py/tags/manage/) into the local machine.
+* Pull Stratos PHP docker image from [DockerHub](https://registry.hub.docker.com/u/apachestratos/php/tags/manage/) into the local machine.
     ``` sh 
     docker pull apachestratos/php:4.1.0-m3
     ```
