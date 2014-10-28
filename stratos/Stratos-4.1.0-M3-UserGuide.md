@@ -619,6 +619,8 @@ Jira List
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/STRATOS-911'>STRATOS-911</a>] -         VM and Container members should be able to have different expiry timeouts
 </li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-920'>STRATOS-920</a>] -         Wiki - Stratos 4.1.0 - M3 - Developer Preview - Getting Started Guide
+</li>
 </ul>
             
 **Bugs**
