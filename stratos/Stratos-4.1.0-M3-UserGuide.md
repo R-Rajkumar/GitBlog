@@ -601,6 +601,17 @@ Jira List
 ----------
 
     
+**New Feature**
+
+<ul>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-792'>STRATOS-792</a>] -         Python Cartridge Agent
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-#'>STRATOS-#</a>] -             Private Docker Registry
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-#'>STRATOS-#</a>] -             Updating policies at runtime
+</li>
+</ul>
+    
 **Improvement**
 
 <ul>
@@ -620,17 +631,7 @@ Jira List
 
 </ul>
 
-    
-**New Feature**
 
-<ul>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-792'>STRATOS-792</a>] -         Python Cartridge Agent
-</li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-#'>STRATOS-#</a>] -             Private Docker Registry
-</li>
-<li>[<a href='https://issues.apache.org/jira/browse/STRATOS-#'>STRATOS-#</a>] -             Updating policies at runtime
-</li>
-</ul>
       
 
 **Known Issues**
