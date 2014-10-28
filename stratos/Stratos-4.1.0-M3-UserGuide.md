@@ -415,7 +415,7 @@ subscribe-cartridge --autoscaling-policy economy -p php-subscription.json
 
 ##5. Accessing PHP service via Stratos Load Balancer
 
-* Map LB's IP to cluster hostname in /etc/hosts file. Clust hostname can be found in Stratos Management Console under subscribed cartridges
+* Map LB's IP to cluster hostname in /etc/hosts file. Cluster hostname can be found in Stratos Management Console under subscribed cartridges
    
  For example add the following entry to your /etc/hosts file.
     ```bash
